@@ -18,14 +18,29 @@ class Chromosome:
     def get_fitness(self):
         return self.fitness
 
+    def get_genes(self):
+        return self.genes
+
     def mutate(self, mutation_rate):
+        # TODO: do this
+        pass
+
+    def crossover_children(self, chromosome):
         # TODO: do this
         pass
 
 class Population:
 
-    def __init__(self, size):
+    def __init__(self):
         self.chromosomes = []
+
+    @staticmethod
+    def instantiate_population(size, instantiate):
+        population = Population()
+        population.instantiate = instantiate
+        while len(population.chromosomes) != size:
+            new_chromosome = population.instantiate_chromosome()
+            population.add_chromosome(new_chromosome)
     
     def get_chromosomes(self):
         return self.chromosomes
@@ -33,16 +48,22 @@ class Population:
     def add_chromosome(self, chromosome):
         self.chromosomes.append(chromosome)
 
+    def instantiate_chromosome(self):
+        return self.instantiate()
+
+
 class GeneticAlgorithm:
     @staticmethod
     def evolve(population):
-        pass
+        crossover_population = GeneticAlgorithm.crossover(population)
+        mutated_population = GeneticAlgorithm.mutate(crossover_population)
+        return mutated_population
     
     @staticmethod
     def crossover(population):
         # TODO: add select tournament
         population.get_chromosomes().sort(key=lambda ann: ann.get_fitness(), reverse = True)
-        crossover_population = Population(0)
+        crossover_population = Population()
         for i in range(NUMBER_OF_ELITE_CHROMOSOMES):
             elite_chromosome = population.get_chromosomes()[i]
             crossover_population.add_chromosome(elite_chromosome)
@@ -59,6 +80,7 @@ class GeneticAlgorithm:
             elite_chromosome_two = crossover_population.get_chromosomes()[idx2]
 
             new_chromosome = GeneticAlgorithm.crossover_chromosomes(
+                population,
                 elite_chromosome_one,
                 elite_chromosome_two
             )
@@ -67,9 +89,12 @@ class GeneticAlgorithm:
         return crossover_population
 
     @staticmethod
-    def crossover_chromosomes(chromosome_one, chromosome_two):
-        # TODO: do this
-        return Chromosome.instantiate()
+    def crossover_chromosomes(population, chromosome_one, chromosome_two):
+        crossover_chromosome_one, crossover_chromosome_two = chromosome_one.crossover_children(chromosome_two)
+        if crossover_chromosome_one.get_fitness() < crossover_chromosome_two.get_fitness():
+            return crossover_chromosome_two
+        else:
+            return crossover_chromosome_one
 
     @staticmethod
     def mutate(population):
