@@ -35,13 +35,14 @@ class Population:
         self.chromosomes = []
 
     @staticmethod
-    def instantiate_population(size, instantiate):
+    def instantiate_population(instantiate):
         population = Population()
         population.instantiate = instantiate
-        while len(population.chromosomes) != size:
+        while len(population.chromosomes) != POPULATION_SIZE:
             new_chromosome = population.instantiate_chromosome()
             population.add_chromosome(new_chromosome)
-    
+        return population
+
     def get_chromosomes(self):
         return self.chromosomes
 
@@ -50,6 +51,14 @@ class Population:
 
     def instantiate_chromosome(self):
         return self.instantiate()
+    
+    def train(self):
+        # TODO: do this
+        pass
+
+    def calculate_fitness(self):
+        # TODO: do this
+        pass
 
 
 class GeneticAlgorithm:
@@ -108,8 +117,3 @@ class GeneticAlgorithm:
     def mutate_chromosome(chromosome):
         # TODO: update fitness
         chromosome.mutate(MUTATION_RATE)
-
-
-        
-
-

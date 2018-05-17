@@ -1,12 +1,13 @@
 from sklearn.neural_network import MLPClassifier
 from sklearn.metrics import accuracy_score
 from util_methods import select_arquitecture, select_learning_rate
+from genetic_algorithm import Chromosome
 
-class NeuralNetwors(MLPClassifier):
-    def __init__(self, variables):
+class NeuralNetwork(MLPClassifier, Chromosome):
+    def __init__(self):
         self.selected_arquitecture = select_arquitecture()
         self.selected_learning_rate = select_learning_rate()
-        self.selected_variables = variables
+        # self.selected_variables = variables
 
         self.predictions = []
         self.accuracy = 0
@@ -28,4 +29,31 @@ class NeuralNetwors(MLPClassifier):
 
     def do_evaluate_accuracy(self, output_test):
         self.accuracy = accuracy_score(output_test, self.predictions)
+
+    # ******************************************************************************
+    # Chromosome methods
+    # ******************************************************************************
+
+    def get_fitness(self):
+        return self.accuracy
+
+    def get_genes(self):
+        return self.selected_arquitecture
+
+    def crossover_children(self, chromosome):
+        # TODO: do this
+        pass
+
+    def mutate(self, mutation_rate):
+        # TODO: do this
+        pass
+
+    # ******************************************************************************
+    # Static methods
+    # ******************************************************************************
+
+    @staticmethod
+    def instantiate():
+        # TODO: do this
+        pass
 
