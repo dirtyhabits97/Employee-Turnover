@@ -31,7 +31,7 @@ class NeuralNetwork(MLPClassifier, Chromosome):
     
     def do_train(self, X_train, y_train):
         variables_to_drop = []
-        for i in range(0, X_train.columns):
+        for i in range(0, len(X_train.columns)):
             if i not in self.selected_variables:
                 variables_to_drop.append(i)
             
@@ -40,7 +40,7 @@ class NeuralNetwork(MLPClassifier, Chromosome):
 
     def do_classify(self, X_test):
         variables_to_drop = []
-        for i in range(0, X_test.columns):
+        for i in range(0, len(X_test.columns)):
             if i not in self.selected_variables:
                 variables_to_drop.append(i)
 

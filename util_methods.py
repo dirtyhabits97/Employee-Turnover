@@ -14,7 +14,7 @@ def select_variables(size = DataManager.shared().get_number_of_columns()):
     variables = set()
     number_of_variables = randint(MIN_NUMBER_OF_VARIABLES, MAX_NUMBER_OF_VARIABLES)
     while len(variables) != number_of_variables:
-        variable = randint(0,size - 1)
+        variable = randint(0,len(size) - 1)
         if variable not in variables:
             variables.add(variable)
     return variables

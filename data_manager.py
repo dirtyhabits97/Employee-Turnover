@@ -19,14 +19,18 @@ class DataManager:
     def read_data(self, filepath):
         self.data_frame = pd.read_csv(filepath)
 
+    def pre_process_data(self):
+        pass
+
     def print_data(self):
         print('\n===================REPORTE DE VARIABLES=================')
         print(self.data_frame.describe().transpose())
         print('\n=======================ESTRUCTURA=======================')
         print(self.data_frame.shape)
+        print('\n==========================TIPOS=========================')
+        print(self.data_frame.dtypes)
 
     def split_data(self, output_variable_name, test_size = 0.2):
-        print('\n===================SPLIT DATA=================')
         input = self.data_frame.drop(output_variable_name, axis = 1)
         output = self.data_frame[output_variable_name]
         self.input_train, input_test, self.output_train, output_test = train_test_split(input, output, test_size = test_size)
