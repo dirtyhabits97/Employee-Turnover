@@ -30,10 +30,22 @@ class NeuralNetwork(MLPClassifier, Chromosome):
         )
     
     def do_train(self, X_train, y_train):
-        self.fit(X_train, y_train)
+        variables_to_drop = []
+        for i in range(0, X_train.columns):
+            if i not in self.selected_variables:
+                variables_to_drop.append(i)
+            
+        new_X_train = X_train.drop(X_train.columns[variables_to_drop], axis = 1)
+        self.fit(new_X_train, y_train)
 
     def do_classify(self, X_test):
-        self.predictions = self.predict(X_test)
+        variables_to_drop = []
+        for i in range(0, X_test.columns):
+            if i not in self.selected_variables:
+                variables_to_drop.append(i)
+
+        new_X_test = X_test.drop(X_test.columns[variables_to_drop], axis = 1)
+        self.predictions = self.predict(new_X_test)
 
     def do_evaluate_accuracy(self, y_test):
         self.accuracy = accuracy_score(y_test, self.predictions)
