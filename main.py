@@ -22,19 +22,24 @@ def setup_data_manager():
     data_manager.print_data()
 
 def setup_population():
+    dm = DataManager.shared()
     population = Population.instantiate_population(NeuralNetwork.instantiate)
-    population.train()
-    population.calculate_fitness()
+    population.prepare_fitness(dm.get_X_train(), dm.get_y_train())
+    population.calculate_fitness(dm.get_X_test(), dm.get_y_test())
     print_population(population, 0)
     return population
 
 def main():
+    setup_data_manager()
+    dm = DataManager.shared()
+
     population = setup_population()
     generation_number = 1
 
     while population.get_chromosomes()[0].get_fitness < TARGET_FITNESS:
         population = GeneticAlgorithm.evolve(population)
-        population.calculate_fitness()
+        population.prepare_fitness(dm.get_X_train(), dm.get_y_train())
+        population.calculate_fitness(dm.get_X_test(), dm.get_y_test())
         population.get_chromosomes().sort(key=lambda ann: ann.get_fitness(), reverse = True)
         print_population(population, generation_number)
         generation_number += 1

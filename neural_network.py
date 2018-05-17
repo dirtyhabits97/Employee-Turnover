@@ -4,6 +4,11 @@ from util_methods import select_arquitecture, select_learning_rate
 from genetic_algorithm import Chromosome
 
 class NeuralNetwork(MLPClassifier, Chromosome):
+
+    # ******************************************************************************
+    # Neural Network methods
+    # ******************************************************************************
+    
     def __init__(self):
         self.selected_arquitecture = select_arquitecture()
         self.selected_learning_rate = select_learning_rate()
@@ -21,14 +26,14 @@ class NeuralNetwork(MLPClassifier, Chromosome):
             learning_rate_init = self.selected_learning_rate,
         )
     
-    def do_train(self, input_vector, output_vector):
-        self.fit(input_vector, output_vector)
+    def do_train(self, X_train, y_train):
+        self.fit(X_train, y_train)
 
-    def do_classify(self, input_test):
-        self.predictions = self.predict(input_test)
+    def do_classify(self, X_test):
+        self.predictions = self.predict(X_test)
 
-    def do_evaluate_accuracy(self, output_test):
-        self.accuracy = accuracy_score(output_test, self.predictions)
+    def do_evaluate_accuracy(self, y_test):
+        self.accuracy = accuracy_score(y_test, self.predictions)
 
     # ******************************************************************************
     # Chromosome methods
@@ -39,6 +44,14 @@ class NeuralNetwork(MLPClassifier, Chromosome):
 
     def get_genes(self):
         return self.selected_arquitecture
+
+    def prepare_fitness(self, X_train, y_train):
+        if self.accuracy != 0: return
+        self.do_train(X_train, y_train)
+
+    def calculate_fitness(self, X_test, y_test):
+        self.do_classify(X_test)
+        self.do_evaluate_accuracy(y_test)
 
     def crossover_children(self, chromosome):
         # TODO: do this

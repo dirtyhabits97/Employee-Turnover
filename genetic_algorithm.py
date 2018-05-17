@@ -28,6 +28,12 @@ class Chromosome:
     def crossover_children(self, chromosome):
         # TODO: do this
         pass
+    
+    def prepare_fitness(self):
+        pass
+
+    def calculate_fitness(self):
+        pass
 
 class Population:
 
@@ -52,13 +58,13 @@ class Population:
     def instantiate_chromosome(self):
         return self.instantiate()
     
-    def train(self):
-        # TODO: do this
-        pass
+    def prepare_fitness(self, X_train, y_train):
+        for chromosome in self.get_chromosomes():
+            chromosome.prepare_fitness(X_train, y_train)
 
-    def calculate_fitness(self):
-        # TODO: do this
-        pass
+    def calculate_fitness(self, X_test, y_test):
+        for chromosome in self.get_chromosomes():
+            chromosome.calculate_fitness(X_test, y_test)
 
 
 class GeneticAlgorithm:
