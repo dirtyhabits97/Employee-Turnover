@@ -2,7 +2,7 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 
 class DataManager:
-    __instance == None
+    __instance = None
 
     @staticmethod
     def shared():
@@ -26,6 +26,7 @@ class DataManager:
         print(self.data_frame.shape)
 
     def split_data(self, output_variable_name, test_size = 0.2):
+        print('\n===================SPLIT DATA=================')
         input = self.data_frame.drop(output_variable_name, axis = 1)
         output = self.data_frame[output_variable_name]
         self.input_train, input_test, self.output_train, output_test = train_test_split(input, output, test_size = test_size)
@@ -52,3 +53,6 @@ class DataManager:
     
     def get_y_test_final(self):
         return self.output_test_final
+
+    def get_number_of_columns(self):
+        return self.get_X_train().columns

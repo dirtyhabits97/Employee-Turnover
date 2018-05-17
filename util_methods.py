@@ -1,4 +1,5 @@
 from random import randint, uniform
+from data_manager import DataManager
 
 MAX_NUMBER_OF_VARIABLES = 10
 MIN_NUMBER_OF_VARIABLES = 5
@@ -9,7 +10,7 @@ MIN_NUMBER_OF_NODES = 3
 MAX_LEARNING_RATE = 0.10
 MIN_LEARNING_RATE = 0.01
 
-def select_variables(size):
+def select_variables(size = DataManager.shared().get_number_of_columns()):
     variables = set()
     number_of_variables = randint(MIN_NUMBER_OF_VARIABLES, MAX_NUMBER_OF_VARIABLES)
     while len(variables) != number_of_variables:

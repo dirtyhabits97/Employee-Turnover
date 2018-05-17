@@ -1,9 +1,7 @@
 from data_manager import DataManager
-from genetic_algorithm import Population, GeneticAlgorithm
-from neural_network import NeuralNetwork
 
-FILE_PATH = ""
-VARIABLE_TO_CLASSIFY = ""
+FILE_PATH = "/Users/gonzalo/Desktop/turnover_dataset.csv"
+VARIABLE_TO_CLASSIFY = "Attrition"
 TARGET_FITNESS = 0.80
 
 def print_population(pop, gen_number):
@@ -23,15 +21,22 @@ def setup_data_manager():
 
 def setup_population():
     dm = DataManager.shared()
+
+    from genetic_algorithm import Population
+    from neural_network import NeuralNetwork
+
     population = Population.instantiate_population(NeuralNetwork.instantiate)
     population.prepare_fitness(dm.get_X_train(), dm.get_y_train())
     population.calculate_fitness(dm.get_X_test(), dm.get_y_test())
+    population.get_chromosomes().sort(key=lambda ann: ann.get_fitness(), reverse = True)
     print_population(population, 0)
     return population
 
 def main():
     setup_data_manager()
     dm = DataManager.shared()
+
+    from genetic_algorithm import GeneticAlgorithm
 
     population = setup_population()
     generation_number = 1
