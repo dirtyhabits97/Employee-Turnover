@@ -2,7 +2,7 @@ from data_manager import DataManager
 
 FILE_PATH = "/Users/gonzalo/Desktop/turnover_dataset.csv"
 VARIABLE_TO_CLASSIFY = "Attrition"
-TARGET_FITNESS = 0.80
+TARGET_FITNESS = 0.99
 
 def print_population(pop, gen_number):
     print("\n-----------------------------------------------------")
@@ -41,7 +41,7 @@ def main():
     population = setup_population()
     generation_number = 1
 
-    while population.get_chromosomes()[0].get_fitness < TARGET_FITNESS:
+    while population.get_chromosomes()[0].get_fitness() < TARGET_FITNESS:
         population = GeneticAlgorithm.evolve(population)
         population.prepare_fitness(dm.get_X_train(), dm.get_y_train())
         population.calculate_fitness(dm.get_X_test(), dm.get_y_test())

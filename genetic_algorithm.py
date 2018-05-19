@@ -69,6 +69,9 @@ class Population:
         for chromosome in self.get_chromosomes():
             chromosome.calculate_fitness(X_test, y_test)
 
+    def __len__(self):
+        return len(self.get_chromosomes())
+
 
 class GeneticAlgorithm:
     @staticmethod

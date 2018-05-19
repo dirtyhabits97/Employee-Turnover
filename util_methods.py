@@ -11,12 +11,12 @@ MAX_LEARNING_RATE = 0.10
 MIN_LEARNING_RATE = 0.01
 
 def select_variables(size = DataManager.shared().get_number_of_columns()):
-    variables = set()
+    variables = []
     number_of_variables = randint(MIN_NUMBER_OF_VARIABLES, MAX_NUMBER_OF_VARIABLES)
     while len(variables) != number_of_variables:
         variable = randint(0,len(size) - 1)
         if variable not in variables:
-            variables.add(variable)
+            variables.append(variable)
     return variables
 
 def select_arquitecture():
