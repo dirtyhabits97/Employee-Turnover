@@ -2,6 +2,8 @@ import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
 
+from print_methods import print_data
+
 class DataManager:
     __instance = None
 
@@ -24,22 +26,12 @@ class DataManager:
         pass
 
     def print_data(self):
-        print('\n===================REPORTE DE VARIABLES CUANTITATIVAS=================')
-        print(self.data_frame.describe().transpose())
-        print('\n===================REPORTE DE VARIABLES CUALITATIVAS=================')
-        print(self.data_frame.describe(exclude = [np.number]).transpose())
-        print('\n=======================ESTRUCTURA=======================')
-        print(self.data_frame.shape)
-        print('\n==========================TIPOS=========================')
-        print(self.data_frame.dtypes)
+        print_data(self.data_frame)
 
     def split_data(self, output_variable_name, test_size = 0.2):
         input = self.data_frame.drop(output_variable_name, axis = 1)
-        print("*********************************************************")
-        print(len(input.columns))
-        input = input.select_dtypes( include = [np.number])
-        print(len(input.columns))
-        print("*********************************************************")
+        # TODO: delete this, support cat variables
+        input = input.select_dtypes(include = [np.number])
 
         output = self.data_frame[output_variable_name]
         self.input_train, input_test, self.output_train, output_test = train_test_split(input, output, test_size = test_size)

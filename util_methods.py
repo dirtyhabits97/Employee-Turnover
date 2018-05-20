@@ -1,14 +1,10 @@
 from random import randint, uniform
 from data_manager import DataManager
 
-MAX_NUMBER_OF_VARIABLES = 10
-MIN_NUMBER_OF_VARIABLES = 5
-MAX_NUMBER_OF_LAYERS = 4
-MIN_NUMBER_OF_LAYERS = 1
-MAX_NUMBER_OF_NODES = 10
-MIN_NUMBER_OF_NODES = 3
-MAX_LEARNING_RATE = 0.01
-MIN_LEARNING_RATE = 0.001
+from settings import MIN_NUMBER_OF_VARIABLES, MAX_NUMBER_OF_VARIABLES
+from settings import MIN_NUMBER_OF_LAYERS, MAX_NUMBER_OF_LAYERS
+from settings import MIN_NUMBER_OF_NODES, MAX_NUMBER_OF_NODES
+from settings import MIN_LEARNING_RATE, MAX_LEARNING_RATE
 
 def select_variables(size = DataManager.shared().get_number_of_columns()):
     variables = []

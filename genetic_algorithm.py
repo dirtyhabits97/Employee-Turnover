@@ -1,8 +1,6 @@
 from random import randint, random
 
-POPULATION_SIZE = 20
-NUMBER_OF_ELITE_CHROMOSOMES = int(POPULATION_SIZE / 10) # 10% del tamaño de la población
-MUTATION_RATE = 0.01
+from settings import POPULATION_SIZE, NUMBER_OF_ELITE_CHROMOSOMES, MUTATION_RATE
 
 class Chromosome:
     def __init__(self):

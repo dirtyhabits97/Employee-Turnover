@@ -4,7 +4,7 @@ from util_methods import select_arquitecture, select_learning_rate, select_varia
 from genetic_algorithm import Chromosome
 from random import randint
 
-LEARNING_RATE_PROBABILITY = 25
+from settings import LEARNING_RATE_PROBABILITY
 
 class NeuralNetwork(MLPClassifier, Chromosome):
 
@@ -27,6 +27,7 @@ class NeuralNetwork(MLPClassifier, Chromosome):
             hidden_layer_sizes = tuple(self.selected_arquitecture),
             learning_rate = 'constant',
             learning_rate_init = self.selected_learning_rate,
+            max_iter = 10000
         )
     
     def do_train(self, X_train, y_train):
@@ -61,11 +62,11 @@ class NeuralNetwork(MLPClassifier, Chromosome):
     def do_evaluate_accuracy(self, y_test):
         self.accuracy = accuracy_score(y_test, self.predictions)
 
-        print("Test: ", y_test.to_string())
+        # print("Test: ", y_test.to_string())
 
-        print("Predictions: \n", self.predictions)
-        print("Accuracy: ", self.accuracy)
-        print("==================FINISHED  PREDICTING==================")
+        # print("Predictions: \n", self.predictions)
+        # print("Accuracy: ", self.accuracy)
+        # print("==================FINISHED  PREDICTING==================")
 
     # ******************************************************************************
     # Chromosome methods

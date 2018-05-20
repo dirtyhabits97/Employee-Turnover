@@ -1,27 +1,15 @@
 from data_manager import DataManager
 
-FILE_PATH = "/Users/gonzalo/Desktop/turnover_dataset.csv"
-VARIABLE_TO_CLASSIFY = "Attrition"
-TARGET_FITNESS = 1.01
-NUMBER_OF_GENERATIONS = 3
+from settings import FILE_PATH, VARIABLE_TO_CLASSIFY
+from settings import NUMBER_OF_GENERATIONS, TARGET_FITNESS
 
-def print_population(pop, gen_number):
-    max_length = pop.max_chromosome_length()
-    print("\n-----------------------------------------------------")
-    print("Generation #", gen_number, "| Fittest chromosome fitness: ", pop.get_chromosomes()[0].get_fitness())
-    print("\n-----------------------------------------------------")
-    i = 0
-    for ann in pop.get_chromosomes():
-        c_length = max_length - len(ann)
-        added_length = " " * c_length
-        print("Chromosome ", str(i).zfill(2), " :", ann, added_length, "| Fitness:  ", ann.get_fitness())
-        i += 1
+from print_methods import print_population, print_data
 
 def setup_data_manager():
     data_manager = DataManager.shared()
     data_manager.read_data(FILE_PATH)
     data_manager.split_data(VARIABLE_TO_CLASSIFY)
-    data_manager.print_data()
+    print_data(data_manager)
 
 def setup_population():
     dm = DataManager.shared()
