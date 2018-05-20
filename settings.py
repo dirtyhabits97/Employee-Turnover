@@ -61,4 +61,4 @@ class Log(OrderedEnum):
     show_predictions = 4
     show_learning_process = 5
 
-LOG_LEVEL = Log.show_chromosome_fitness
+LOG_LEVEL = Log.show_variable_report

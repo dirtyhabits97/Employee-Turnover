@@ -2,16 +2,16 @@ import numpy as np
 
 from settings import LOG_LEVEL, Log
 
-def print_data(dm):
+def print_data(data_frame):
     if LOG_LEVEL < Log.show_variable_report: return
     print('\n===================REPORTE DE VARIABLES CUANTITATIVAS=================')
-    print(dm.data_frame.describe().transpose())
+    print(data_frame.describe().transpose())
     print('\n===================REPORTE DE VARIABLES CUALITATIVAS=================')
-    print(dm.data_frame.describe(exclude = [np.number]).transpose())
+    print(data_frame.describe(exclude = [np.number]).transpose())
     print('\n=======================ESTRUCTURA=======================')
-    print(dm.data_frame.shape)
+    print(data_frame.shape)
     print('\n==========================TIPOS=========================')
-    print(dm.data_frame.dtypes)
+    print(data_frame.dtypes)
 
 
 def print_population(population, gen_number):
@@ -47,7 +47,6 @@ def print_population(population, gen_number):
     header_frame = "*" * len(output.split("\n")[0])
     padding = " " * int((len(header_frame) - len(header_title))/ 2)
     header_title = padding + header_title
-    print(len(padding))
     print(header_frame, "\n")
     print(header_title, "\n")
     print(header_frame)

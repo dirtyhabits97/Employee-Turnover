@@ -3,13 +3,13 @@ from data_manager import DataManager
 from settings import FILE_PATH, VARIABLE_TO_CLASSIFY
 from settings import NUMBER_OF_GENERATIONS, TARGET_FITNESS
 
-from print_methods import print_population, print_data
+from print_methods import print_population
 
 def setup_data_manager():
     data_manager = DataManager.shared()
     data_manager.read_data(FILE_PATH)
     data_manager.split_data(VARIABLE_TO_CLASSIFY)
-    print_data(data_manager)
+    data_manager.print_data()
 
 def setup_population():
     dm = DataManager.shared()
