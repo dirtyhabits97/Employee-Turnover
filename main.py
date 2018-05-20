@@ -2,8 +2,8 @@ from data_manager import DataManager
 
 FILE_PATH = "/Users/gonzalo/Desktop/turnover_dataset.csv"
 VARIABLE_TO_CLASSIFY = "Attrition"
-TARGET_FITNESS = 0.99
-NUMBER_OF_GENERATIONS = 1500
+TARGET_FITNESS = 1.01
+NUMBER_OF_GENERATIONS = 3
 
 def print_population(pop, gen_number):
     max_length = pop.max_chromosome_length()

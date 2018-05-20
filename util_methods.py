@@ -7,8 +7,8 @@ MAX_NUMBER_OF_LAYERS = 4
 MIN_NUMBER_OF_LAYERS = 1
 MAX_NUMBER_OF_NODES = 10
 MIN_NUMBER_OF_NODES = 3
-MAX_LEARNING_RATE = 0.10
-MIN_LEARNING_RATE = 0.01
+MAX_LEARNING_RATE = 0.01
+MIN_LEARNING_RATE = 0.001
 
 def select_variables(size = DataManager.shared().get_number_of_columns()):
     variables = []
