@@ -1,7 +1,7 @@
 from random import randint, random
 
-NUMBER_OF_ELITE_CHROMOSOMES = 2
 POPULATION_SIZE = 20
+NUMBER_OF_ELITE_CHROMOSOMES = int(POPULATION_SIZE / 10) # 10% del tamaño de la población
 MUTATION_RATE = 0.01
 
 class Chromosome:
@@ -71,6 +71,10 @@ class Population:
 
     def __len__(self):
         return len(self.get_chromosomes())
+
+    def max_chromosome_length(self):
+        max_length = max (len(c) for c in self.get_chromosomes())
+        return max_length
 
 
 class GeneticAlgorithm:

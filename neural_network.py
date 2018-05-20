@@ -12,10 +12,10 @@ class NeuralNetwork(MLPClassifier, Chromosome):
     # Neural Network methods
     # ******************************************************************************
     
-    def __init__(self, arquitecture = select_arquitecture(), learning_rate = select_learning_rate(), variables = []):
-        self.selected_arquitecture = arquitecture
-        self.selected_learning_rate = learning_rate
-        self.selected_variables = variables
+    def __init__(self, arquitecture = None, learning_rate = None, variables = None):
+        self.selected_arquitecture = arquitecture if arquitecture is not None else select_arquitecture()
+        self.selected_learning_rate = learning_rate if learning_rate is not None else select_learning_rate()
+        self.selected_variables = variables if variables is not None else []
 
         self.predictions = []
         self.accuracy = 0
@@ -107,6 +107,12 @@ class NeuralNetwork(MLPClassifier, Chromosome):
     def mutate(self, mutation_rate):
         # TODO: do this
         pass
+
+    def __str__(self):
+        return self.get_genes().__str__()
+
+    def __len__(self):
+        return len(self.__str__())
 
     # ******************************************************************************
     # Static methods
