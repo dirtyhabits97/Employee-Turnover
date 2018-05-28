@@ -1,8 +1,6 @@
 from random import randint, random
 
-NUMBER_OF_ELITE_CHROMOSOMES = 2
-POPULATION_SIZE = 20
-MUTATION_RATE = 0.01
+from settings import POPULATION_SIZE, NUMBER_OF_ELITE_CHROMOSOMES, MUTATION_RATE
 
 class Chromosome:
     def __init__(self):
@@ -68,6 +66,13 @@ class Population:
     def calculate_fitness(self, X_test, y_test):
         for chromosome in self.get_chromosomes():
             chromosome.calculate_fitness(X_test, y_test)
+
+    def __len__(self):
+        return len(self.get_chromosomes())
+
+    def max_chromosome_length(self):
+        max_length = max (len(c) for c in self.get_chromosomes())
+        return max_length
 
 
 class GeneticAlgorithm:

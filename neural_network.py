@@ -4,7 +4,7 @@ from util_methods import select_arquitecture, select_learning_rate, select_varia
 from genetic_algorithm import Chromosome
 from random import randint
 
-LEARNING_RATE_PROBABILITY = 25
+from settings import LEARNING_RATE_PROBABILITY
 
 class NeuralNetwork(MLPClassifier, Chromosome):
 
@@ -12,10 +12,10 @@ class NeuralNetwork(MLPClassifier, Chromosome):
     # Neural Network methods
     # ******************************************************************************
     
-    def __init__(self, arquitecture = select_arquitecture(), learning_rate = select_learning_rate(), variables = []):
-        self.selected_arquitecture = arquitecture
-        self.selected_learning_rate = learning_rate
-        self.selected_variables = variables
+    def __init__(self, arquitecture = None, learning_rate = None, variables = None):
+        self.selected_arquitecture = arquitecture if arquitecture is not None else select_arquitecture()
+        self.selected_learning_rate = learning_rate if learning_rate is not None else select_learning_rate()
+        self.selected_variables = variables if variables is not None else select_variables()
 
         self.predictions = []
         self.accuracy = 0
@@ -27,6 +27,7 @@ class NeuralNetwork(MLPClassifier, Chromosome):
             hidden_layer_sizes = tuple(self.selected_arquitecture),
             learning_rate = 'constant',
             learning_rate_init = self.selected_learning_rate,
+            max_iter = 10000
         )
     
     def do_train(self, X_train, y_train):
@@ -34,7 +35,9 @@ class NeuralNetwork(MLPClassifier, Chromosome):
         for i in range(0, len(X_train.columns)):
             if i not in self.selected_variables:
                 variables_to_drop.append(i)
-            
+        # print("=======================TRAINING=======================")
+        # print("Train: \n", y_train.to_string())
+        # print("==================FINISHED TRAINING===================")
         new_X_train = X_train.drop(X_train.columns[variables_to_drop], axis = 1)
         self.fit(new_X_train, y_train)
 
@@ -45,10 +48,25 @@ class NeuralNetwork(MLPClassifier, Chromosome):
                 variables_to_drop.append(i)
 
         new_X_test = X_test.drop(X_test.columns[variables_to_drop], axis = 1)
+        # print("=======================PREDICTING=======================")
+        # print("Variable Count: ", len(new_X_test.columns))
+        # print("Variables: ", self.selected_variables)
+        # print("Arquitecture: ", self.hidden_layer_sizes)
+        # print("Selected Arquitecture: ", self.selected_arquitecture)
+        # print("Learning rate: ", self.learning_rate_init)
+        # print("Selected Learning rate: ", self.selected_learning_rate)
+
         self.predictions = self.predict(new_X_test)
+
 
     def do_evaluate_accuracy(self, y_test):
         self.accuracy = accuracy_score(y_test, self.predictions)
+
+        # print("Test: ", y_test.to_string())
+
+        # print("Predictions: \n", self.predictions)
+        # print("Accuracy: ", self.accuracy)
+        # print("==================FINISHED  PREDICTING==================")
 
     # ******************************************************************************
     # Chromosome methods
@@ -108,6 +126,12 @@ class NeuralNetwork(MLPClassifier, Chromosome):
         # TODO: do this
         pass
 
+    def __str__(self):
+        return self.get_genes().__str__()
+
+    def __len__(self):
+        return len(self.__str__())
+
     # ******************************************************************************
     # Static methods
     # ******************************************************************************
@@ -116,9 +140,7 @@ class NeuralNetwork(MLPClassifier, Chromosome):
     # instantiate with random parameters
     # used to create the first generation of neural network population
     def instantiate():
-        variables = select_variables()
-        ann = NeuralNetwork(variables= variables)
-        return ann
+        return NeuralNetwork()
 
 
     @staticmethod
