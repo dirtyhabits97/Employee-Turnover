@@ -3,6 +3,7 @@ from sklearn.metrics import accuracy_score
 from util_methods import select_arquitecture, select_learning_rate, select_variables
 from genetic_algorithm import Chromosome
 from random import randint
+from cross_validation import CrossValidation
 
 from settings import LEARNING_RATE_PROBABILITY
 
@@ -19,6 +20,7 @@ class NeuralNetwork(MLPClassifier, Chromosome):
 
         self.predictions = []
         self.accuracy = 0
+        self.standardDeviation = 0
 
         # MLP Classifier init
         # http://scikit-learn.org/stable/modules/generated/sklearn.neural_network.MLPClassifier.html
@@ -29,45 +31,22 @@ class NeuralNetwork(MLPClassifier, Chromosome):
             learning_rate_init = self.selected_learning_rate,
             max_iter = 10000
         )
+
+    def filter_variables(self, X):
+        variables_to_drop = []
+        for i in range(0, len(X.columns)):
+            if i not in self.selected_variables:
+                variables_to_drop.append(i)
+
+        new_X = X.drop(X[variables_to_drop], axis = 1)
+        return new_X
+
+    def cross_val_train(self, X, y):
+        mean, sd = CrossValidation.cross_validate(self, X, y)
+
+        self.accuracy = mean
+        self.standardDeviation = sd
     
-    def do_train(self, X_train, y_train):
-        variables_to_drop = []
-        for i in range(0, len(X_train.columns)):
-            if i not in self.selected_variables:
-                variables_to_drop.append(i)
-        # print("=======================TRAINING=======================")
-        # print("Train: \n", y_train.to_string())
-        # print("==================FINISHED TRAINING===================")
-        new_X_train = X_train.drop(X_train.columns[variables_to_drop], axis = 1)
-        self.fit(new_X_train, y_train)
-
-    def do_classify(self, X_test):
-        variables_to_drop = []
-        for i in range(0, len(X_test.columns)):
-            if i not in self.selected_variables:
-                variables_to_drop.append(i)
-
-        new_X_test = X_test.drop(X_test.columns[variables_to_drop], axis = 1)
-        # print("=======================PREDICTING=======================")
-        # print("Variable Count: ", len(new_X_test.columns))
-        # print("Variables: ", self.selected_variables)
-        # print("Arquitecture: ", self.hidden_layer_sizes)
-        # print("Selected Arquitecture: ", self.selected_arquitecture)
-        # print("Learning rate: ", self.learning_rate_init)
-        # print("Selected Learning rate: ", self.selected_learning_rate)
-
-        self.predictions = self.predict(new_X_test)
-
-
-    def do_evaluate_accuracy(self, y_test):
-        self.accuracy = accuracy_score(y_test, self.predictions)
-
-        # print("Test: ", y_test.to_string())
-
-        # print("Predictions: \n", self.predictions)
-        # print("Accuracy: ", self.accuracy)
-        # print("==================FINISHED  PREDICTING==================")
-
     # ******************************************************************************
     # Chromosome methods
     # ******************************************************************************
@@ -80,14 +59,10 @@ class NeuralNetwork(MLPClassifier, Chromosome):
         genes = (self.selected_variables, self.selected_arquitecture, self.selected_learning_rate)
         return genes
 
-    def prepare_fitness(self, X_train, y_train):
+    def calculate_fitness(self, X, y):
         if self.accuracy != 0: return
-        self.do_train(X_train, y_train)
-
-    def calculate_fitness(self, X_test, y_test):
-        if self.accuracy != 0: return
-        self.do_classify(X_test)
-        self.do_evaluate_accuracy(y_test)
+        new_X = self.filter_variables(X)
+        self.cross_val_train(new_X, y)
 
     # Crossover methods
     def crossover_children(self, chromosome):
