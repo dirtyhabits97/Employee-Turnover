@@ -1,11 +1,9 @@
 from sklearn.neural_network import MLPClassifier
 from sklearn.metrics import accuracy_score
-from util_methods import select_arquitecture, select_learning_rate, select_variables
+from util_methods import select_arquitecture, select_variables
 from genetic_algorithm import Chromosome
 from random import randint
 from cross_validation import CrossValidation
-
-from settings import LEARNING_RATE_PROBABILITY
 
 class NeuralNetwork(MLPClassifier, Chromosome):
 

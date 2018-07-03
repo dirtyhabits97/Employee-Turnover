@@ -15,8 +15,8 @@ MIN_NUMBER_OF_NODES         = 3
 # ******************************************************************************
 
 NUMBER_OF_GENERATIONS       = 1000
-POPULATION_SIZE             = 20
-NUMBER_OF_ELITE_CHROMOSOMES = int(POPULATION_SIZE * 0.1) # 10% del tamaño de la población
+POPULATION_SIZE             = 25 # Echegaray-Calderon, O A Barrios-Aranibar, D
+NUMBER_OF_ELITE_CHROMOSOMES = int(POPULATION_SIZE * 0.1) # Echegaray-Calderon, O A Barrios-Aranibar, D
 MUTATION_RATE               = 0.01
 TARGET_FITNESS              = 1.01
 
