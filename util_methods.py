@@ -14,9 +14,7 @@ def select_variables(size = DataManager.shared().get_number_of_columns()):
             variables.append(1)
         else:
             variables.append(0)
-    print(variables_to_use)
-    print(variables)
-    return variables_to_use
+    return variables
 
 def select_arquitecture():
     nodes = []

@@ -31,8 +31,8 @@ class NeuralNetwork(MLPClassifier, Chromosome):
 
     def filter_variables(self, X):
         variables_to_drop = []
-        for i in range(0, len(X.columns)):
-            if i not in self.selected_variables:
+        for i in range(0, len(self.selected_variables)):
+            if self.selected_variables[i] != 1:
                 variables_to_drop.append(i)
 
         new_X = X.drop(X.columns[variables_to_drop], axis = 1)
