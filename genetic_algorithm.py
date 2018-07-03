@@ -58,14 +58,10 @@ class Population:
 
     def instantiate_chromosome(self):
         return self.instantiate()
-    
-    def prepare_fitness(self, X_train, y_train):
-        for chromosome in self.get_chromosomes():
-            chromosome.prepare_fitness(X_train, y_train)
 
-    def calculate_fitness(self, X_test, y_test):
+    def calculate_fitness(self, X, y):
         for chromosome in self.get_chromosomes():
-            chromosome.calculate_fitness(X_test, y_test)
+            chromosome.calculate_fitness(X, y)
 
     def __len__(self):
         return len(self.get_chromosomes())

@@ -38,7 +38,7 @@ class NeuralNetwork(MLPClassifier, Chromosome):
             if i not in self.selected_variables:
                 variables_to_drop.append(i)
 
-        new_X = X.drop(X[variables_to_drop], axis = 1)
+        new_X = X.drop(X.columns[variables_to_drop], axis = 1)
         return new_X
 
     def cross_val_train(self, X, y):

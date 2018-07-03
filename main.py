@@ -18,8 +18,7 @@ def setup_population():
     from neural_network import NeuralNetwork
 
     population = Population.instantiate_population(NeuralNetwork.instantiate)
-    population.prepare_fitness(dm.get_X_train(), dm.get_y_train())
-    population.calculate_fitness(dm.get_X_test(), dm.get_y_test())
+    population.calculate_fitness(dm.get_X_train(), dm.get_y_train())
     population.get_chromosomes().sort(key=lambda ann: ann.get_fitness(), reverse = True)
     print_population(population, 0)
     return population
@@ -35,8 +34,7 @@ def main():
 
     while generation_number != NUMBER_OF_GENERATIONS and population.get_chromosomes()[0].get_fitness() < TARGET_FITNESS:
         population = GeneticAlgorithm.evolve(population)
-        population.prepare_fitness(dm.get_X_train(), dm.get_y_train())
-        population.calculate_fitness(dm.get_X_test(), dm.get_y_test())
+        population.calculate_fitness(dm.get_X_train(), dm.get_y_train())
         population.get_chromosomes().sort(key=lambda ann: ann.get_fitness(), reverse = True)
         print_population(population, generation_number)
         generation_number += 1
