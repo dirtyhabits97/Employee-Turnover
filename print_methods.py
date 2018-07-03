@@ -2,6 +2,22 @@ import numpy as np
 
 from settings import LOG_LEVEL, Log
 
+def print_variables(data_frame):
+    if LOG_LEVEL < Log.show_variable_report: return
+
+    output = ""
+    max_name_len = max(len(col) for col in data_frame)
+    for i, col in enumerate(data_frame):
+        added_str = " " * (max_name_len - len(col))
+        output += "X%02d: %s%s %s\n" % (i, col, added_str, data_frame[col].dtype.name)
+
+    line_len = len(output.split("\n")[0])
+    title = "VARIABLES"
+    decoration = "=" * int((line_len + 4 - len(title))/2)
+
+    print(decoration + title + decoration)
+    print(output)
+
 def print_data(data_frame):
     if LOG_LEVEL < Log.show_variable_report: return
     print('\n===================REPORTE DE VARIABLES CUANTITATIVAS=================')

@@ -9,7 +9,7 @@ def setup_data_manager():
     data_manager = DataManager.shared()
     data_manager.read_data(FILE_PATH)
     data_manager.split_data(VARIABLE_TO_CLASSIFY)
-    data_manager.print_data()
+    data_manager.print_variables()
 
 def setup_population():
     dm = DataManager.shared()

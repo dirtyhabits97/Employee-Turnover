@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
 
-from print_methods import print_data
+from print_methods import print_data, print_variables
 
 class DataManager:
     __instance = None
@@ -27,6 +27,9 @@ class DataManager:
 
     def print_data(self):
         print_data(self.data_frame)
+
+    def print_variables(self):
+        print_variables(self.data_frame)
 
     def split_data(self, output_variable_name, test_size = 0.2):
         X = self.data_frame.drop(output_variable_name, axis = 1)
