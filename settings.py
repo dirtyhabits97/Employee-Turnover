@@ -8,9 +8,6 @@ MAX_NUMBER_OF_LAYERS        = 4
 MIN_NUMBER_OF_LAYERS        = 1
 MAX_NUMBER_OF_NODES         = 10
 MIN_NUMBER_OF_NODES         = 3
-MAX_LEARNING_RATE           = 0.005
-MIN_LEARNING_RATE           = 0.001
-LEARNING_RATE_PROBABILITY   = 25
 
 
 # ******************************************************************************
@@ -19,7 +16,7 @@ LEARNING_RATE_PROBABILITY   = 25
 
 NUMBER_OF_GENERATIONS       = 1000
 POPULATION_SIZE             = 20
-NUMBER_OF_ELITE_CHROMOSOMES = int(POPULATION_SIZE * 0.5) # 10% del tamaño de la población
+NUMBER_OF_ELITE_CHROMOSOMES = int(POPULATION_SIZE * 0.1) # 10% del tamaño de la población
 MUTATION_RATE               = 0.01
 TARGET_FITNESS              = 1.01
 
