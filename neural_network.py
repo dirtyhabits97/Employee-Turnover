@@ -13,9 +13,8 @@ class NeuralNetwork(MLPClassifier, Chromosome):
     # Neural Network methods
     # ******************************************************************************
     
-    def __init__(self, arquitecture = None, learning_rate = None, variables = None):
+    def __init__(self, arquitecture = None, variables = None):
         self.selected_arquitecture = arquitecture if arquitecture is not None else select_arquitecture()
-        self.selected_learning_rate = learning_rate if learning_rate is not None else select_learning_rate()
         self.selected_variables = variables if variables is not None else select_variables()
 
         self.predictions = []
@@ -28,7 +27,7 @@ class NeuralNetwork(MLPClassifier, Chromosome):
             self,
             hidden_layer_sizes = tuple(self.selected_arquitecture),
             learning_rate = 'constant',
-            learning_rate_init = self.selected_learning_rate,
+            learning_rate_init = 0.001,
             max_iter = 10000
         )
 
@@ -56,7 +55,7 @@ class NeuralNetwork(MLPClassifier, Chromosome):
 
     def get_genes(self):
         # TODO: implement selected variables
-        genes = (self.selected_variables, self.selected_arquitecture, self.selected_learning_rate)
+        genes = (self.selected_variables, self.selected_arquitecture)
         return genes
 
     def calculate_fitness(self, X, y):
@@ -68,13 +67,11 @@ class NeuralNetwork(MLPClassifier, Chromosome):
     def crossover_children(self, chromosome):
         variables = chromosome.get_genes()[0]
         arquitecture = chromosome.get_genes()[1]
-        learning_rate = chromosome.get_genes()[2]
         v1, v2 = self.cross_variables(variables)
         a1, a2 = self.cross_arquitecture(arquitecture)
-        l1, l2 = self.cross_learning_rate(learning_rate)
 
-        children_one = NeuralNetwork.instantiate_with_attributes(v1, a1, l1)
-        children_two = NeuralNetwork.instantiate_with_attributes(v2, a2, l2)
+        children_one = NeuralNetwork.instantiate_with_attributes(v1, a1)
+        children_two = NeuralNetwork.instantiate_with_attributes(v2, a2)
         return children_one, children_two
 
     def cross_variables(self, variables):
@@ -90,12 +87,6 @@ class NeuralNetwork(MLPClassifier, Chromosome):
             arquitecture
         )
         return arquitecture_one, arquitecture_two
-    
-    def cross_learning_rate(self, learning_rate):
-        if randint(0, 100) <= LEARNING_RATE_PROBABILITY:
-            return learning_rate, self.selected_learning_rate
-        else:
-            return self.selected_learning_rate, learning_rate
 
     def mutate(self, mutation_rate):
         # TODO: do this
@@ -119,11 +110,10 @@ class NeuralNetwork(MLPClassifier, Chromosome):
 
 
     @staticmethod
-    def instantiate_with_attributes(variables, arquitecture, learning_rate):
+    def instantiate_with_attributes(variables, arquitecture):
         ann = NeuralNetwork(
             variables = variables,
-            arquitecture = arquitecture,
-            learning_rate = learning_rate
+            arquitecture = arquitecture
         )
         return ann
 
