@@ -26,13 +26,13 @@ class NeuralNetwork(MLPClassifier, Chromosome):
             hidden_layer_sizes = tuple(self.selected_arquitecture),
             learning_rate = 'constant',
             learning_rate_init = 0.001,
-            max_iter = 10000
+            max_iter = 3000
         )
 
     def filter_variables(self, X):
         variables_to_drop = []
-        for i in range(0, len(X.columns)):
-            if i not in self.selected_variables:
+        for i in range(0, len(self.selected_variables)):
+            if self.selected_variables[i] != 1:
                 variables_to_drop.append(i)
 
         new_X = X.drop(X.columns[variables_to_drop], axis = 1)

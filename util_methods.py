@@ -1,4 +1,4 @@
-from random import randint, uniform
+from random import randint, uniform, sample
 from data_manager import DataManager
 
 from settings import MIN_NUMBER_OF_VARIABLES, MAX_NUMBER_OF_VARIABLES
@@ -6,12 +6,14 @@ from settings import MIN_NUMBER_OF_LAYERS, MAX_NUMBER_OF_LAYERS
 from settings import MIN_NUMBER_OF_NODES, MAX_NUMBER_OF_NODES
 
 def select_variables(size = DataManager.shared().get_number_of_columns()):
-    variables = []
     number_of_variables = randint(MIN_NUMBER_OF_VARIABLES, MAX_NUMBER_OF_VARIABLES)
-    while len(variables) != number_of_variables:
-        variable = randint(0,len(size) - 1)
-        if variable not in variables:
-            variables.append(variable)
+    variables_to_use = sample(range(0, len(size)), number_of_variables)
+    variables = []
+    for i in range(0, len(size)):
+        if i in variables_to_use:
+            variables.append(1)
+        else:
+            variables.append(0)
     return variables
 
 def select_arquitecture():
