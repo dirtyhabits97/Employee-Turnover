@@ -104,7 +104,9 @@ class GeneticAlgorithm:
                 elite_chromosome_two
             )
             crossover_population.add_chromosome(new_chromosome_one)
-            crossover_population.add_chromosome(new_chromosome_two)
+            if len(crossover_population) != POPULATION_SIZE:
+                crossover_population.add_chromosome(new_chromosome_two)
+
         return crossover_population
 
     @staticmethod
