@@ -2,8 +2,9 @@ from sklearn.neural_network import MLPClassifier
 from sklearn.metrics import accuracy_score
 from util_methods import select_arquitecture, select_variables
 from genetic_algorithm import Chromosome
-from random import randint
+from random import randint, random
 from cross_validation import CrossValidation
+from settings import MIN_NUMBER_OF_NODES, MAX_NUMBER_OF_NODES
 
 class NeuralNetwork(MLPClassifier, Chromosome):
 
@@ -86,9 +87,24 @@ class NeuralNetwork(MLPClassifier, Chromosome):
         )
         return arquitecture_one, arquitecture_two
 
-    def mutate(self, mutation_rate):
-        # TODO: do this
-        pass
+    def mutate(self, chromosome, mutation_rate):
+
+        variables = chromosome.get_genes()[0]
+        arquitecture = chromosome.get_genes()[1]
+
+        for i in range(0 , len(variables)):
+            if random() < mutation_rate:
+                variables[i] = 0 if variables[i] == 1 else 1
+            
+        for i in range(0, len(arquitecture)):
+            if random() < mutation_rate:
+                new_v = arquitecture[i]
+                while new_v == arquitecture[i]:
+                    new_v = randint(MIN_NUMBER_OF_NODES, MAX_NUMBER_OF_NODES)
+                arquitecture[i] = new_v
+
+        self.selected_variables = variables
+        self.selected_arquitecture = arquitecture
 
     def __str__(self):
         return self.get_genes().__str__()
@@ -116,7 +132,6 @@ class NeuralNetwork(MLPClassifier, Chromosome):
         return ann
 
 
-
 def _crossover_array(arr1, arr2):
     l1 = arr1
     l2 = arr2
@@ -127,4 +142,3 @@ def _crossover_array(arr1, arr2):
     # second children
     children_two = l2[0:crossover_idx+1] + l1[crossover_idx+1:]
     return children_one, children_two
-

@@ -75,9 +75,9 @@ class GeneticAlgorithm:
     @staticmethod
     def evolve(population):
         crossover_population = GeneticAlgorithm.crossover(population)
-        # mutated_population = GeneticAlgorithm.mutate(crossover_population)
-        # return mutated_population
-        return crossover_population
+        mutated_population = GeneticAlgorithm.mutate(crossover_population)
+        return mutated_population
+        # return crossover_population
     
     @staticmethod
     def crossover(population):
@@ -124,5 +124,4 @@ class GeneticAlgorithm:
     
     @staticmethod
     def mutate_chromosome(chromosome):
-        # TODO: update fitness
-        chromosome.mutate(MUTATION_RATE)
+        chromosome.mutate(chromosome, MUTATION_RATE)
