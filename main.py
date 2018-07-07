@@ -1,9 +1,9 @@
-from data_manager import DataManager
+from data.data_manager import DataManager
 
 from settings import FILE_PATH, VARIABLE_TO_CLASSIFY
 from settings import NUMBER_OF_GENERATIONS, TARGET_FITNESS
 
-from print_methods import print_population
+from helper_methods.print_methods import print_population
 
 def setup_data_manager():
     data_manager = DataManager.shared()
@@ -14,10 +14,10 @@ def setup_data_manager():
 def setup_population():
     dm = DataManager.shared()
 
-    from genetic_algorithm import Population
-    from neural_network import NeuralNetwork
+    from genetic_algorithm.population import Population
+    from neural_network.neural_network import NeuralNetwork
 
-    population = Population.instantiate_population(NeuralNetwork.instantiate)
+    population = Population.instantiate(NeuralNetwork.instantiate)
     population.calculate_fitness(dm.get_X_train(), dm.get_y_train())
     population.get_chromosomes().sort(key=lambda ann: ann.get_fitness(), reverse = True)
     print_population(population, 0)
@@ -27,7 +27,7 @@ def main():
     setup_data_manager()
     dm = DataManager.shared()
 
-    from genetic_algorithm import GeneticAlgorithm
+    from genetic_algorithm.genetic_algorithm import GeneticAlgorithm
 
     population = setup_population()
     generation_number = 1

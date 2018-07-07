@@ -1,4 +1,6 @@
-from sklearn.model_selection import KFold
+from sklearn.model_selection import KFold, cross_val_score, cross_val_predict
+from sklearn.metrics import accuracy_score
+
 import numpy as np
 class CrossValidation:
 
@@ -17,3 +19,15 @@ class CrossValidation:
         mean = s.mean()
         sd   = s.std()
         return mean, sd
+
+    @staticmethod
+    def cross_validation_score(clf, X, y):
+        scores = cross_val_score(clf, X, y)
+        mean   = scores.mean()
+        sd     = scores.std()
+        return mean, sd
+
+    @staticmethod
+    def cross_validation_predict(clf, X, y):
+        y_pred = cross_val_predict(clf, X, y)
+        return accuracy_score(y, y_pred)
