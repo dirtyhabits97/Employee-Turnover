@@ -20,8 +20,7 @@ class NeuralNetwork(MLPClassifier, Chromosome):
 
         self.accuracy = 0
 
-        # TODO: validate line 25
-        self.fitness = self.accuracy # fitness = accuracy
+        self.fitness = 0 # fitness = accuracy
         self.genes = (self.variables.raw(), self.arquitecture.raw())
 
         # MLP Classifier init

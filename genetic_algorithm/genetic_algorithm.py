@@ -1,4 +1,4 @@
-from genetic_algorithm.population import Population
+from .population import Population
 from settings import NUMBER_OF_ELITE_CHROMOSOMES, POPULATION_SIZE, MUTATION_RATE, TOURNAMENT_POPULATION
 
 class GeneticAlgorithm:
