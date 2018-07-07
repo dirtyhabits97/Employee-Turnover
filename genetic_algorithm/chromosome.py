@@ -14,12 +14,15 @@ class Chromosome:
         return self.genes
 
     def mutate(self, mutation_rate):
-        pass
+        for g in self.genes:
+            g.mutate(mutation_rate)
 
     def crossover_children(self, chromosome):
+        # Override this method
         pass
 
     def calculate_fitness(self):
+        # Override this method
         pass
 
     def __str___(self):
