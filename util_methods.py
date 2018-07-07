@@ -25,3 +25,13 @@ def select_arquitecture():
     return nodes
 
     
+def crossover_array(arr1, arr2):
+    l1 = arr1
+    l2 = arr2
+
+    crossover_idx = randint(0, min(len(l1), len(l2)))
+    # first children
+    children_one = l1[0:crossover_idx+1] + l2[crossover_idx+1:]
+    # second children
+    children_two = l2[0:crossover_idx+1] + l1[crossover_idx+1:]
+    return children_one, children_two
