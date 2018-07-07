@@ -53,7 +53,6 @@ class NeuralNetwork(MLPClassifier, Chromosome):
         return self.accuracy
 
     def get_genes(self):
-        # TODO: implement selected variables
         genes = (self.selected_variables, self.selected_arquitecture)
         return genes
 

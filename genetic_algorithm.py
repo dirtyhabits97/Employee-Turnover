@@ -1,6 +1,6 @@
 from random import randint, random
 
-from settings import POPULATION_SIZE, NUMBER_OF_ELITE_CHROMOSOMES, MUTATION_RATE
+from settings import POPULATION_SIZE, NUMBER_OF_ELITE_CHROMOSOMES, MUTATION_RATE, TOURNAMENT_POPULATION
 
 class Chromosome:
     def __init__(self):
@@ -20,13 +20,9 @@ class Chromosome:
         return self.genes
 
     def mutate(self, mutation_rate):
-        # TODO: do this
         pass
 
     def crossover_children(self, chromosome):
-        pass
-    
-    def prepare_fitness(self):
         pass
 
     def calculate_fitness(self):
@@ -53,6 +49,9 @@ class Population:
     def get_chromosomes(self):
         return self.chromosomes
 
+    def get_size(self):
+        return len(self.get_chromosomes())
+
     def add_chromosome(self, chromosome):
         self.chromosomes.append(chromosome)
 
@@ -70,6 +69,17 @@ class Population:
         max_length = max (len(c) for c in self.get_chromosomes())
         return max_length
 
+    # If there are multiple chromosomes with the same fitness it picks the fitst one
+    def best_fitness_chromosome(self):
+        best_idx = 0
+        best_fitness = 0
+        for i in range(1, self.get_size()):
+            c = self.get_chromosomes()[i]
+            if c.get_fitness() > best_fitness:
+                best_idx = i
+                best_fitness = c.get_fitness()
+        return self.get_chromosomes()[best_idx]
+
 
 class GeneticAlgorithm:
     @staticmethod
@@ -81,6 +91,7 @@ class GeneticAlgorithm:
     
     @staticmethod
     def crossover(population):
+        print("Doing cross over")
         # TODO: add select tournament
         population.get_chromosomes().sort(key=lambda ann: ann.get_fitness(), reverse = True)
         crossover_population = Population()
@@ -90,22 +101,22 @@ class GeneticAlgorithm:
 
         # exclude elite chromosomes
         while len(crossover_population) != POPULATION_SIZE:
-            idx1 = randint(0, NUMBER_OF_ELITE_CHROMOSOMES - 1)
-            idx2 = randint(0, NUMBER_OF_ELITE_CHROMOSOMES - 1)
-            while idx1 == idx2:
-                idx2 = randint(0, NUMBER_OF_ELITE_CHROMOSOMES - 1)
-            
-            elite_chromosome_one = crossover_population.get_chromosomes()[idx1]
-            elite_chromosome_two = crossover_population.get_chromosomes()[idx2]
+            print("Before tournament")
+            chromosome_one = GeneticAlgorithm.select_tournament(population)
+            chromosome_two = GeneticAlgorithm.select_tournament(population)
 
+            print("Making new chromosomes")
             new_chromosome_one, new_chromosome_two = GeneticAlgorithm.crossover_chromosomes(
                 population,
-                elite_chromosome_one,
-                elite_chromosome_two
+                chromosome_one,
+                chromosome_two
             )
+            print("Finished making new chromosomes")
             crossover_population.add_chromosome(new_chromosome_one)
             if len(crossover_population) != POPULATION_SIZE:
                 crossover_population.add_chromosome(new_chromosome_two)
+
+        print("Crossover is over")
 
         return crossover_population
 
@@ -125,3 +136,12 @@ class GeneticAlgorithm:
     @staticmethod
     def mutate_chromosome(chromosome):
         chromosome.mutate(chromosome, MUTATION_RATE)
+
+    @staticmethod
+    def select_tournament(population):
+        print("Tournament going on")
+        selected_population = Population()
+        for _ in range(0, TOURNAMENT_POPULATION):
+            c = population.get_chromosomes()[randint(0, POPULATION_SIZE - 1)]
+            selected_population.add_chromosome(c)
+        return selected_population.best_fitness_chromosome()
