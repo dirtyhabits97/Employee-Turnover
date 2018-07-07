@@ -13,15 +13,15 @@ class Chromosome:
     def get_genes(self):
         return self.genes
 
-    def mutate(self, mutation_rate):
-        for g in self.genes:
-            g.mutate(mutation_rate)
-
-    def crossover_children(self, chromosome):
+    def calculate_fitness(self):
         # Override this method
         pass
 
-    def calculate_fitness(self):
+    def crossover_with(self, chromosome):
+        # Override this method
+        pass
+
+    def mutate(self, mutation_rate):
         # Override this method
         pass
 

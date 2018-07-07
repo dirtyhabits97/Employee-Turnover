@@ -34,7 +34,7 @@ def print_population(population, gen_number):
     if LOG_LEVEL < Log.show_highest_fitness: 
         print("Processing generarion ", str(gen_number).zfill(2), "...")
         return
-    header_title = "Generation #" + str(gen_number) + "| Fittest chromosome fitness: " + str(population.get_chromosomes()[0].get_fitness())
+    header_title = "Generation #" + str(gen_number) + "| Fittest chromosome fitness: " + str(population.get_best_chromosome().get_fitness())
     header_frame = "\n" + "*" * len(str(header_title))
 
     if LOG_LEVEL < Log.show_chromosome_fitness: 
@@ -44,7 +44,7 @@ def print_population(population, gen_number):
         return
 
 
-    max_length = population.max_chromosome_length()
+    max_length = population.get_max_chromosome_length()
     output = ""
     i = 0
     for ann in population.get_chromosomes():

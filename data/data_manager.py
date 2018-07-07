@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
 
-from print_methods import print_data, print_variables
+from  helper_methods.print_methods import print_data, print_variables
 
 class DataManager:
     __instance = None
@@ -21,9 +21,8 @@ class DataManager:
     
     def read_data(self, filepath):
         self.data_frame = pd.read_csv(filepath)
-
-    def pre_process_data(self):
-        pass
+        # Delete unneeded variables
+        self.data_frame = self.data_frame.drop("EmployeeNumber", axis = 1)
 
     def print_data(self):
         print_data(self.data_frame)
@@ -38,10 +37,6 @@ class DataManager:
 
         y = self.data_frame[output_variable_name]
         self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(X, y, test_size = test_size)
-
-    def normalize_data(self):
-        # TODO: do this
-        pass
 
     def get_X_train(self):
         return self.X_train

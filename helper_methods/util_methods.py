@@ -1,5 +1,5 @@
 from random import randint, uniform, sample
-from data_manager import DataManager
+from data.data_manager import DataManager
 
 from settings import MIN_NUMBER_OF_VARIABLES, MAX_NUMBER_OF_VARIABLES
 from settings import MIN_NUMBER_OF_LAYERS, MAX_NUMBER_OF_LAYERS

@@ -15,8 +15,8 @@ class Population:
 
     def add_chromosome(self, new_c):
         idx = self.get_size()
-        for i in self.chromosomes:
-            if new_c > self.chromosomes[i]:
+        for i in range(self.get_size()):
+            if new_c.get_fitness() > self.chromosomes[i].get_fitness():
                 idx = i
                 break
         self.chromosomes[idx:idx] = [new_c]
