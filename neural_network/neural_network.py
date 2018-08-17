@@ -13,9 +13,12 @@ class NeuralNetwork(MLPClassifier, Chromosome):
 
     def __init__(self, variables = None, arquitecture = None):
         v = variables if variables else select_variables()
-        a = arquitecture if arquitecture else select_arquitecture()
+        #a = arquitecture if arquitecture else select_arquitecture()
 
         self.variables = Variable(v)
+
+        from math import ceil
+        a = [ceil(len(self.variables.used_variables()) / 2)]
         self.arquitecture = Arquitecture(a)
 
         self.accuracy = 0
