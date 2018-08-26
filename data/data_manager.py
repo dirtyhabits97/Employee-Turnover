@@ -2,7 +2,9 @@ import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
 
-from  helper_methods.print_methods import print_data, print_variables
+from helper_methods.print_methods import print_data, print_variables
+from .data_encoding import one_hot_encode, binary_encode
+from .feature_selection import recursive_feature_elimination
 
 class DataManager:
     __instance = None
@@ -18,25 +20,25 @@ class DataManager:
             raise Exception("already instantiated")
         else:
             DataManager.__instance = self
+            self.var_ranking = [0] * 51
     
     def read_data(self, filepath):
         self.data_frame = pd.read_csv(filepath)
+
+    def drop_columns(self, cols):
         # Delete unneeded variables
-        self.data_frame = self.data_frame.drop("EmployeeNumber", axis = 1)
+        self.data_frame = self.data_frame.drop(cols, axis = 1)
+    
+    def one_hot_encode_data(self, variables):
+        self.data_frame = one_hot_encode(self.data_frame, variables)
 
-    def print_data(self):
-        print_data(self.data_frame)
-
-    def print_variables(self):
-        print_variables(self.data_frame)
+    def binary_encode_data(self, variables):
+        self.data_frame = binary_encode(self.data_frame, variables)
 
     def split_data(self, output_variable_name, test_size = 0.2):
-        X = self.data_frame.drop(output_variable_name, axis = 1)
-        # TODO: delete this, support cat variables
-        X = X.select_dtypes(include = [np.number])
-
-        y = self.data_frame[output_variable_name]
-        self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(X, y, test_size = test_size)
+        self.X = self.data_frame.drop(output_variable_name, axis = 1)
+        self.y = self.data_frame[output_variable_name]
+        self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(self.X, self.y, test_size = test_size)
 
     def get_X_train(self):
         return self.X_train
@@ -52,3 +54,21 @@ class DataManager:
 
     def get_number_of_columns(self):
         return self.get_X_train().columns
+
+# ******************************************************************************
+# Data Analysis Methods
+# ******************************************************************************
+
+    def rfe_feature_selection(self, number_of_relevant_v):
+        self.var_ranking = recursive_feature_elimination(self.X, self.y, number_of_relevant_v)
+        return self.var_ranking
+
+# ******************************************************************************
+# Print Data Methods
+# ******************************************************************************
+
+    def print_data(self):
+        print_data(self.data_frame)
+
+    def print_variables(self):
+        print_variables(self.get_X_train(), self.var_ranking)

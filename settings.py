@@ -29,6 +29,30 @@ TOURNAMENT_POPULATION       = ceil(POPULATION_SIZE * 0.2)
 
 FILE_PATH                   = "/Users/gonzalo/Desktop/turnover_dataset.csv"
 VARIABLE_TO_CLASSIFY        = "Attrition"
+VARIABLES_TO_OH_ENCODE      =   [
+                                    "BusinessTravel",
+                                    "Department",
+                                    "EducationField",
+                                    "JobRole",
+                                    "MaritalStatus"
+                                ]
+VARIABLES_TO_B_ENCODE       =   [
+                                    "Gender",
+                                    "OverTime"
+                                ]
+VARIABLES_TO_DELETE         =   [
+                                    "EmployeeNumber",
+                                    "Over18",
+                                    "DailyRate",
+                                    "HourlyRate",
+                                    "MonthlyRate",
+                                    "StandardHours"
+                                ]
+BINARY_ENCODING_DICTIONARY  =   { 
+                                    "Gender": { "No": 0, "Yes": 1 },
+                                    "Over18": { "N": 0, "Y": 1 },
+                                    "OverTime": { "No": 0, "Yes": 1 }
+                                }
 
 # ******************************************************************************
 # Debug settings
