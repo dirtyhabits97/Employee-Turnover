@@ -4,19 +4,21 @@ from settings import FILE_PATH
 from settings import VARIABLE_TO_CLASSIFY, VARIABLES_TO_DELETE
 from settings import VARIABLES_TO_OH_ENCODE, VARIABLES_TO_B_ENCODE
 from settings import NUMBER_OF_GENERATIONS, TARGET_FITNESS
+from settings import CATEGORICAL_VARIABLES
 
 from helper_methods.print_methods import print_population
 
 def setup_data_manager():
     data_manager = DataManager.shared()
     data_manager.read_data(FILE_PATH)
+    data_manager.scale_data(CATEGORICAL_VARIABLES)
     data_manager.drop_columns(VARIABLES_TO_DELETE)
     data_manager.one_hot_encode_data(VARIABLES_TO_OH_ENCODE)
     data_manager.binary_encode_data(VARIABLES_TO_B_ENCODE)
     data_manager.split_data(VARIABLE_TO_CLASSIFY)
     data_manager.rfe_feature_selection(15)
-    data_manager.pca_feature_selection()
-    # data_manager.print_variables()
+    data_manager.pca_feature_selection(0.95)
+    data_manager.print_variables()
 
 def setup_population():
     dm = DataManager.shared()

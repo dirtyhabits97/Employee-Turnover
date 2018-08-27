@@ -48,6 +48,22 @@ VARIABLES_TO_DELETE         =   [
                                     "MonthlyRate",
                                     "StandardHours"
                                 ]
+CATEGORICAL_VARIABLES       =   [
+                                    "BusinessTravel",
+                                    "Department",
+                                    "EducationField",
+                                    "JobRole",
+                                    "MaritalStatus",
+                                    "Gender",
+                                    "OverTime",
+                                    "EmployeeNumber",
+                                    "Over18",
+                                    "DailyRate",
+                                    "HourlyRate",
+                                    "MonthlyRate",
+                                    "StandardHours",
+                                    "Attrition"
+                                ]
 BINARY_ENCODING_DICTIONARY  =   { 
                                     "Gender": { "No": 0, "Yes": 1 },
                                     "Over18": { "N": 0, "Y": 1 },

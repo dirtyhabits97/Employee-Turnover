@@ -4,7 +4,7 @@ from sklearn.model_selection import train_test_split
 
 from helper_methods.print_methods import print_data, print_variables
 from .data_encoding import one_hot_encode, binary_encode
-from .feature_selection import recursive_feature_elimination, principal_components_analysis
+from .feature_selection import recursive_feature_elimination, principal_components_analysis, scale_data_frame
 
 class DataManager:
     __instance = None
@@ -23,7 +23,11 @@ class DataManager:
             self.var_ranking = [0] * 51
     
     def read_data(self, filepath):
-        self.data_frame = pd.read_csv(filepath)
+        self.data_frame_original = pd.read_csv(filepath)
+        self.data_frame = self.data_frame_original.copy()
+
+    def scale_data(self, categorical_variables):
+        self.data_frame = scale_data_frame(self.data_frame, categorical_variables)
 
     def drop_columns(self, cols):
         # Delete unneeded variables
@@ -63,8 +67,8 @@ class DataManager:
         self.var_ranking = recursive_feature_elimination(self.X, self.y, number_of_relevant_v)
         return self.var_ranking
 
-    def pca_feature_selection(self):
-        principal_components_analysis(self.X)
+    def pca_feature_selection(self, variance):
+        principal_components_analysis(self.X, variance)
 
 # ******************************************************************************
 # Print Data Methods
