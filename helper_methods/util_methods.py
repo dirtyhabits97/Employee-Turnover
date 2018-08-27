@@ -7,9 +7,9 @@ from settings import MIN_NUMBER_OF_NODES, MAX_NUMBER_OF_NODES
 
 def select_variables(size = DataManager.shared().get_number_of_columns()):
     number_of_variables = randint(MIN_NUMBER_OF_VARIABLES, MAX_NUMBER_OF_VARIABLES)
-    variables_to_use = sample(range(0, len(size)), number_of_variables)
+    variables_to_use = sample(range(0, size), number_of_variables)
     variables = []
-    for i in range(0, len(size)):
+    for i in range(0, size):
         if i in variables_to_use:
             variables.append(1)
         else:

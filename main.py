@@ -15,7 +15,8 @@ def setup_data_manager():
     data_manager.binary_encode_data(VARIABLES_TO_B_ENCODE)
     data_manager.split_data(VARIABLE_TO_CLASSIFY)
     data_manager.rfe_feature_selection(15)
-    data_manager.print_variables()
+    data_manager.pca_feature_selection()
+    # data_manager.print_variables()
 
 def setup_population():
     dm = DataManager.shared()

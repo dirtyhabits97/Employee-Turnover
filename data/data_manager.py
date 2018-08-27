@@ -4,7 +4,7 @@ from sklearn.model_selection import train_test_split
 
 from helper_methods.print_methods import print_data, print_variables
 from .data_encoding import one_hot_encode, binary_encode
-from .feature_selection import recursive_feature_elimination
+from .feature_selection import recursive_feature_elimination, principal_components_analysis
 
 class DataManager:
     __instance = None
@@ -53,7 +53,7 @@ class DataManager:
         return self.y_test
 
     def get_number_of_columns(self):
-        return self.get_X_train().columns
+        return len(self.get_X_train().columns)
 
 # ******************************************************************************
 # Data Analysis Methods
@@ -62,6 +62,9 @@ class DataManager:
     def rfe_feature_selection(self, number_of_relevant_v):
         self.var_ranking = recursive_feature_elimination(self.X, self.y, number_of_relevant_v)
         return self.var_ranking
+
+    def pca_feature_selection(self):
+        principal_components_analysis(self.X)
 
 # ******************************************************************************
 # Print Data Methods
