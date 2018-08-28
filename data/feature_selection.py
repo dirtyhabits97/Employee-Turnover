@@ -47,6 +47,7 @@ def recursive_feature_elimination(X, y, n):
 
     header_text = header_decorator * repeat_hd + header_text + header_decorator * repeat_hd
     footer_text = header_decorator * len(header_text)
+    print("")
     print(header_text, "\n")
     print(output)
     print(footer_text, "\n")

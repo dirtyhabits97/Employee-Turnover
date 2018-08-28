@@ -27,10 +27,10 @@ def setup_data_manager():
     # Recursive feature elimination
     data_manager.rfe_analysis(15)
     # PCA analysis
-    data_manager.pca_analysis(0.80)
+    data_manager.pca_analysis(0.95)
 
     # - Print Data -
-    # data_manager.print_variables()
+    data_manager.print_variables()
 
 def setup_population():
     dm = DataManager.shared()

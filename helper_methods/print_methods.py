@@ -2,17 +2,15 @@ import numpy as np
 
 from settings import LOG_LEVEL, Log
 
-def print_variables(data_frame, var_ranking):
+def print_variables(data_frame):
     if LOG_LEVEL < Log.show_variable_report: return
 
     output = ""
     max_name_len = max(len(col) for col in data_frame)
     for i, col in enumerate(data_frame):
-        rank = var_ranking[i]
-        relevant = "Relevante" if rank == 1 else ""
         added_str = " " * (max_name_len - len(col))
         output += "X%02d: %s%s %s" % (i, col, added_str, data_frame[col].dtype.name)
-        output += "\t   #%02d    %s\n" % (rank, relevant)
+        output += "\n"
 
     line_len = len(output.split("\n")[0])
     title = "VARIABLES"

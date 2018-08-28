@@ -6,8 +6,8 @@ MAX_NUMBER_OF_VARIABLES     = 20
 MIN_NUMBER_OF_VARIABLES     = 15
 MAX_NUMBER_OF_LAYERS        = 4
 MIN_NUMBER_OF_LAYERS        = 1
-MAX_NUMBER_OF_NODES         = 10
-MIN_NUMBER_OF_NODES         = 3
+MAX_NUMBER_OF_NODES         = 12
+MIN_NUMBER_OF_NODES         = 8
 
 
 # ******************************************************************************

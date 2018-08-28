@@ -41,6 +41,8 @@ class Arquitecture:
     def mutate(self, mutation_rate):
         from settings import MIN_NUMBER_OF_NODES as MIN, MAX_NUMBER_OF_NODES as MAX
 
+        if random() > mutation_rate: return
+
         for i in range(len(self.a)):
             new_a = self.a[i]
             while new_a == self.a[i]:

@@ -20,7 +20,6 @@ class DataManager:
             raise Exception("already instantiated")
         else:
             DataManager.__instance = self
-            self.var_ranking = [0] * 60
     
     def read_data(self, filepath):
         self.data_frame_original = pd.read_csv(filepath)
@@ -63,8 +62,7 @@ class DataManager:
 # ******************************************************************************
 
     def rfe_analysis(self, number_of_relevant_v):
-        self.var_ranking = recursive_feature_elimination(self.X_train, self.y_train, number_of_relevant_v)
-        return self.var_ranking
+        recursive_feature_elimination(self.X_train, self.y_train, number_of_relevant_v)
 
     def pca_analysis(self, variance):
         principal_components_analysis(self.X_train, self.y_train, variance)
@@ -77,4 +75,4 @@ class DataManager:
         print_data(self.data_frame)
 
     def print_variables(self):
-        print_variables(self.get_X_train(), self.var_ranking)
+        print_variables(self.get_X_train())
