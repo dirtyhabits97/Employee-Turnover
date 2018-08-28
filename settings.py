@@ -2,8 +2,8 @@
 # Neural Network settings
 # ******************************************************************************
 
-MAX_NUMBER_OF_VARIABLES     = 10
-MIN_NUMBER_OF_VARIABLES     = 5
+MAX_NUMBER_OF_VARIABLES     = 20
+MIN_NUMBER_OF_VARIABLES     = 15
 MAX_NUMBER_OF_LAYERS        = 4
 MIN_NUMBER_OF_LAYERS        = 1
 MAX_NUMBER_OF_NODES         = 10
@@ -38,17 +38,19 @@ VARIABLES_TO_OH_ENCODE      =   [
                                 ]
 VARIABLES_TO_B_ENCODE       =   [
                                     "Gender",
-                                    "OverTime"
+                                    "OverTime",
+                                    "Over18"
                                 ]
 VARIABLES_TO_DELETE         =   [
                                     "EmployeeNumber",
-                                    "Over18",
-                                    "DailyRate",
-                                    "HourlyRate",
-                                    "MonthlyRate",
-                                    "StandardHours"
+                                    # "EmployeeCount",
+                                    # "Over18",
+                                    # "DailyRate",
+                                    # "HourlyRate",
+                                    # "MonthlyRate",
+                                    # "StandardHours"
                                 ]
-CATEGORICAL_VARIABLES       =   [
+SCALE_EXCLUDE_VARIABLES       = [
                                     "BusinessTravel",
                                     "Department",
                                     "EducationField",
@@ -56,13 +58,17 @@ CATEGORICAL_VARIABLES       =   [
                                     "MaritalStatus",
                                     "Gender",
                                     "OverTime",
-                                    "EmployeeNumber",
                                     "Over18",
-                                    "DailyRate",
-                                    "HourlyRate",
-                                    "MonthlyRate",
-                                    "StandardHours",
-                                    "Attrition"
+                                    "EmployeeNumber",
+                                    "Attrition",
+                                    "Education",
+                                    "EnvironmentSatisfaction",
+                                    "JobInvolvement",
+                                    "JobLevel",
+                                    "JobSatisfaction",
+                                    "StockOptionLevel",
+                                    "WorkLifeBalance",
+                                    "RelationshipSatisfaction"
                                 ]
 BINARY_ENCODING_DICTIONARY  =   { 
                                     "Gender": { "No": 0, "Yes": 1 },

@@ -12,12 +12,12 @@ class NeuralNetwork(MLPClassifier, Chromosome):
     # ******************************************************************************
 
     def __init__(self, variables = None, arquitecture = None):
-        #v = variables if variables else select_variables()
+        v = variables if variables else select_variables()
         a = arquitecture if arquitecture else select_arquitecture()
 
         # E7 (f > 2)
         # [0, 0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 0, 1, 0, 1, 1, 0, 0, 1, 0, 0, 0]
-        v = [0, 0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 0, 1, 0, 1, 1, 0, 0, 1, 0, 0, 0]
+        # v = [0, 0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 0, 1, 0, 1, 1, 0, 0, 1, 0, 0, 0]
         self.variables = Variable(v)
         self.arquitecture = Arquitecture(a)
 
@@ -48,6 +48,9 @@ class NeuralNetwork(MLPClassifier, Chromosome):
         mean_accuracy, _ = CrossValidation.cross_validate(self, X, y)
         self.accuracy = mean_accuracy
         self.fitness = self.accuracy
+
+    def get_accuracy(self):
+        return self.accuracy if self.accuracy else 0
 
     # ******************************************************************************
     # Chromosome methods

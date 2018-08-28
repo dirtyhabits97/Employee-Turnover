@@ -18,6 +18,7 @@ def one_hot_encode(df, cols):
 
 def binary_encode(df, cols):
     for col in cols:
-        df[col] = df[col].astype('category')
-        df[col] = df[col].cat.codes
+        if col in df.columns:
+            df[col] = df[col].astype('category')
+            df[col] = df[col].cat.codes
     return df

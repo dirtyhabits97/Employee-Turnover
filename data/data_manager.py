@@ -20,17 +20,16 @@ class DataManager:
             raise Exception("already instantiated")
         else:
             DataManager.__instance = self
-            self.var_ranking = [0] * 51
+            self.var_ranking = [0] * 60
     
     def read_data(self, filepath):
         self.data_frame_original = pd.read_csv(filepath)
         self.data_frame = self.data_frame_original.copy()
 
-    def scale_data(self, categorical_variables):
-        self.data_frame = scale_data_frame(self.data_frame, categorical_variables)
+    def scale_data(self, excluded_variables):
+        self.data_frame = scale_data_frame(self.data_frame, excluded_variables)
 
     def drop_columns(self, cols):
-        # Delete unneeded variables
         self.data_frame = self.data_frame.drop(cols, axis = 1)
     
     def one_hot_encode_data(self, variables):
@@ -63,12 +62,12 @@ class DataManager:
 # Data Analysis Methods
 # ******************************************************************************
 
-    def rfe_feature_selection(self, number_of_relevant_v):
-        self.var_ranking = recursive_feature_elimination(self.X, self.y, number_of_relevant_v)
+    def rfe_analysis(self, number_of_relevant_v):
+        self.var_ranking = recursive_feature_elimination(self.X_train, self.y_train, number_of_relevant_v)
         return self.var_ranking
 
-    def pca_feature_selection(self, variance):
-        principal_components_analysis(self.X, variance)
+    def pca_analysis(self, variance):
+        principal_components_analysis(self.X_train, self.y_train, variance)
 
 # ******************************************************************************
 # Print Data Methods

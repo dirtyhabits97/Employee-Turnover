@@ -2,7 +2,6 @@ from sklearn.feature_selection import RFE
 from sklearn.decomposition import PCA
 
 from sklearn.tree import DecisionTreeClassifier
-from sklearn.svm import SVR
 
 from sklearn.preprocessing import StandardScaler
 from sklearn.pipeline import Pipeline
@@ -12,33 +11,94 @@ import pandas as pd
 
 def recursive_feature_elimination(X, y, n):
     clf = DecisionTreeClassifier(random_state = 0)
-    # clf = SVR(kernel = "linear")
     rfe = RFE(clf, n, step = 1)
     rfe.fit(X, y)
-    return rfe.ranking_
+    ranking = rfe.ranking_
 
-def principal_components_analysis(df, variance):
-    pca = PCA(variance)
-    pca.fit(df)
-    sum = 0
-    for v in pca.explained_variance_ratio_:
-        sum += v
+    from neural_network.neural_network import NeuralNetwork
+    from math import ceil
 
-    print("Total variance: ", sum)
-    print("Components: ", pca.n_components_)
-    # mapper = DataFrameMapper([(X.columns, StandardScaler())])
-    # copy_X = X.copy()
-    # scaled_features = mapper.fit_transform(copy_X, 4)
-    # scaled_features_df = pd.DataFrame(scaled_features, index = X.index, columns = X.columns)
-    # print(scaled_features_df.head(3))
+    v = []
+    c = 0
+    for r in ranking:
+        if r == 1:
+            v.append(1)
+            c += 1
+        else:
+            v.append(0)
+    a = [ceil(c / 2)]
+    ann = NeuralNetwork(v, a)
+    ann.cross_val_train(X, y)
+
+    header_text = "(Recursive Feature Elimination)"
+    header_decorator = "="
+
+    output = ""
+    output += "Variables: \n"
+
+    for i, r in enumerate(ranking):
+        if r == 1:
+            output += "    %s\n" % X.columns[i]
     
-    # pca = PCA()
-    # pca.fit(scaled_features_df)
-    # print(pca.explained_variance_ratio_)
+    output += ("Exactitud ANN:  %02f\n" % ann.get_accuracy())
 
-def scale_data_frame(df, categorical_cols):
+    repeat_hd = len(max(output.split("\n"), key = len)) - len(header_text)
+    repeat_hd = max(ceil(repeat_hd / 2), 3)
+
+    header_text = header_decorator * repeat_hd + header_text + header_decorator * repeat_hd
+    footer_text = header_decorator * len(header_text)
+    print(header_text, "\n")
+    print(output)
+    print(footer_text, "\n")
+
+    return ranking
+
+def principal_components_analysis(X, y, variance):
+    X_copy = X.copy()
+    pca = PCA(variance)
+    principal_components = pca.fit_transform(X_copy)
+    
+    cols = []
+    for i in range(pca.n_components_):
+        cols.append("PC-%02d" % (i + 1))
+
+    new_X = pd.DataFrame(data = principal_components, columns = cols)
+
+    from neural_network.neural_network import NeuralNetwork
+    from math import ceil
+
+    v = [1] * len(new_X.columns)
+    a = [ceil(len(v) / 2)]
+    ann = NeuralNetwork(v, a)
+    ann.cross_val_train(new_X, y)
+
+    v_sum = 0
+    for v in pca.explained_variance_ratio_:
+        v_sum += v
+
+    header_text = "(Principal Components Analysis)"
+    header_decorator = "="
+
+    output = ""
+    output += ("Varianza:       %02f\n" % v_sum)
+    output += ("Componentes #:  %d\n" % pca.n_components_)
+    output += ("Exactitud ANN:  %02f\n" % ann.get_accuracy())
+
+    repeat_hd = len(max(output.split("\n"), key = len)) - len(header_text)
+    repeat_hd = max(ceil(repeat_hd / 2), 3)
+
+    header_text = header_decorator * repeat_hd + header_text + header_decorator * repeat_hd
+    footer_text = header_decorator * len(header_text)
+    print(header_text, "\n")
+    print(output)
+    print(footer_text, "\n")
+
+
+
+def scale_data_frame(df, excluded_variables):
     scaled_features = df.copy()
-    non_categorial_cols = scaled_features.columns.difference(categorical_cols)
+
+    non_categorial_cols = scaled_features.columns.difference(excluded_variables)
 
     features = scaled_features[non_categorial_cols]
     
@@ -46,4 +106,7 @@ def scale_data_frame(df, categorical_cols):
     features = scaler.transform(features.values)
 
     scaled_features[non_categorial_cols] = features
+    
+
+
     return scaled_features
