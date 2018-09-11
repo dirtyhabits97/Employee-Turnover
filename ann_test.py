@@ -41,18 +41,18 @@ def main():
         # ann1 = NeuralNetwork(v1)
         # ann2 = NeuralNetwork(v2)
 
-        # annE1 = NeuralNetwork(e1)
-        # annE2 = NeuralNetwork(e2)
-        # annE3 = NeuralNetwork(e3)
+        annE1 = NeuralNetwork(e1)
+        annE2 = NeuralNetwork(e2)
+        annE3 = NeuralNetwork(e3)
 
         X = dm.get_X_train()
         y = dm.get_y_train()
         # ann1.cross_val_train(X, y)
         # ann2.cross_val_train(X, y)
 
-        # annE1.cross_val_train(X, y)
-        # annE2.cross_val_train(X, y)
-        # annE3.cross_val_train(X, y)
+        annE1.cross_val_train(X, y)
+        annE2.cross_val_train(X, y)
+        annE3.cross_val_train(X, y)
 
         from sklearn.model_selection import cross_val_score
 
@@ -70,9 +70,9 @@ def main():
 
         print("\n")
         print("Run #%i:" % i)
-        # print("E1: ", annE1.get_accuracy())
-        # print("E2: ", annE2.get_accuracy())
-        # print("E3: ", annE3.get_accuracy())
+        print("E1: ", annE1.get_accuracy())
+        print("E2: ", annE2.get_accuracy())
+        print("E3: ", annE3.get_accuracy())
         # print("\n")
         # print("F = 3: ", ann1.get_accuracy())
         # print("F >= 2: ", ann2.get_accuracy())
