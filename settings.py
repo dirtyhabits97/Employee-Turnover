@@ -2,12 +2,12 @@
 # Neural Network settings
 # ******************************************************************************
 
-MAX_NUMBER_OF_VARIABLES     = 20
-MIN_NUMBER_OF_VARIABLES     = 15
-MAX_NUMBER_OF_LAYERS        = 4
+MAX_NUMBER_OF_VARIABLES     = 12
+MIN_NUMBER_OF_VARIABLES     = 8
+MAX_NUMBER_OF_LAYERS        = 3
 MIN_NUMBER_OF_LAYERS        = 1
-MAX_NUMBER_OF_NODES         = 12
-MIN_NUMBER_OF_NODES         = 8
+MAX_NUMBER_OF_NODES         = 9
+MIN_NUMBER_OF_NODES         = 5
 
 
 # ******************************************************************************
@@ -43,12 +43,12 @@ VARIABLES_TO_B_ENCODE       =   [
                                 ]
 VARIABLES_TO_DELETE         =   [
                                     "EmployeeNumber",
-                                    # "EmployeeCount",
-                                    # "Over18",
-                                    # "DailyRate",
-                                    # "HourlyRate",
-                                    # "MonthlyRate",
-                                    # "StandardHours"
+                                    "EmployeeCount",
+                                    "Over18",
+                                    "DailyRate",
+                                    "HourlyRate",
+                                    "MonthlyRate",
+                                    "StandardHours"
                                 ]
 SCALE_EXCLUDE_VARIABLES       = [
                                     "BusinessTravel",

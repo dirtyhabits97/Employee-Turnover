@@ -25,7 +25,7 @@ def setup_data_manager():
 
     # - Data Analysis
     # Recursive feature elimination
-    data_manager.rfe_analysis(15)
+    data_manager.rfe_analysis(12)
     # PCA analysis
     data_manager.pca_analysis(0.95)
 
