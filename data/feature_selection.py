@@ -40,7 +40,7 @@ def recursive_feature_elimination(X, y, n):
         if r == 1:
             output += "    %s\n" % X.columns[i]
     
-    output += ("Exactitud ANN:  %02f\n" % ann.get_accuracy())
+    output += ("Accuracy ANN:  %02f\n" % ann.get_accuracy())
 
     repeat_hd = len(max(output.split("\n"), key = len)) - len(header_text)
     repeat_hd = max(ceil(repeat_hd / 2), 3)
@@ -81,9 +81,9 @@ def principal_components_analysis(X, y, variance):
     header_decorator = "="
 
     output = ""
-    output += ("Varianza:       %02f\n" % v_sum)
-    output += ("Componentes #:  %d\n" % pca.n_components_)
-    output += ("Exactitud ANN:  %02f\n" % ann.get_accuracy())
+    output += ("Variance:       %02f\n" % v_sum)
+    output += ("Components #:  %d\n" % pca.n_components_)
+    output += ("Accuracy ANN:  %02f\n" % ann.get_accuracy())
 
     repeat_hd = len(max(output.split("\n"), key = len)) - len(header_text)
     repeat_hd = max(ceil(repeat_hd / 2), 3)

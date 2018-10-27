@@ -11,7 +11,6 @@ class CrossValidation:
 
         for train_index, test_index in kf.split(X):
             clf.fit(X.iloc[train_index], y.iloc[train_index])
-            # TODO: revisar este metodo
             score = clf.score(X.iloc[test_index], y.iloc[test_index])
             scores.append(score)
         

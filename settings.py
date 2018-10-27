@@ -27,6 +27,7 @@ TOURNAMENT_POPULATION       = ceil(POPULATION_SIZE * 0.2)
 # Data Manager settings
 # ******************************************************************************
 
+# Data set retrieved from: https://www.kaggle.com/pavansubhasht/ibm-hr-analytics-attrition-dataset
 FILE_PATH                   = "/Users/gonzalo/Desktop/turnover_dataset.csv"
 VARIABLE_TO_CLASSIFY        = "Attrition"
 VARIABLES_TO_OH_ENCODE      =   [
@@ -75,36 +76,3 @@ BINARY_ENCODING_DICTIONARY  =   {
                                     "Over18": { "N": 0, "Y": 1 },
                                     "OverTime": { "No": 0, "Yes": 1 }
                                 }
-
-# ******************************************************************************
-# Debug settings
-# ******************************************************************************
-
-from enum import Enum
-class OrderedEnum(Enum):
-    def __ge__(self, other):
-        if self.__class__ is other.__class__:
-            return self.value >= other.value
-        return NotImplemented
-    def __gt__(self, other):
-        if self.__class__ is other.__class__:
-            return self.value > other.value
-        return NotImplemented
-    def __le__(self, other):
-        if self.__class__ is other.__class__:
-            return self.value <= other.value
-        return NotImplemented
-    def __lt__(self, other):
-        if self.__class__ is other.__class__:
-            return self.value < other.value
-        return NotImplemented
-
-class Log(OrderedEnum):
-    no_logs = 0
-    show_highest_fitness = 1
-    show_chromosome_fitness = 2
-    show_variable_report = 3
-    show_predictions = 4
-    show_learning_process = 5
-
-LOG_LEVEL = Log.show_variable_report

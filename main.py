@@ -23,13 +23,13 @@ def setup_data_manager():
     # - Data Split -
     data_manager.split_data(VARIABLE_TO_CLASSIFY)
 
-    # - Data Analysis
+    # - Data Analysis -
     # Recursive feature elimination
     data_manager.rfe_analysis(12)
     # PCA analysis
     data_manager.pca_analysis(0.95)
 
-    # - Print Data -
+    # - Print Variables -
     data_manager.print_variables()
 
 def setup_population():

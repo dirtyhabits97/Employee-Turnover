@@ -2,7 +2,7 @@ from .population import Population
 from settings import NUMBER_OF_ELITE_CHROMOSOMES, POPULATION_SIZE, MUTATION_RATE, TOURNAMENT_POPULATION
 
 class GeneticAlgorithm:
-    # TODO: probar metodos de seleccion
+
     @staticmethod
     def evolve(population):
         crossover_population = GeneticAlgorithm.crossover(population)

@@ -1,10 +1,6 @@
 import numpy as np
 
-from settings import LOG_LEVEL, Log
-
 def print_variables(data_frame):
-    if LOG_LEVEL < Log.show_variable_report: return
-
     output = ""
     max_name_len = max(len(col) for col in data_frame)
     for i, col in enumerate(data_frame):
@@ -13,37 +9,29 @@ def print_variables(data_frame):
         output += "\n"
 
     line_len = len(output.split("\n")[0])
-    title = "VARIABLES"
+    title = "(VARIABLES)"
     decoration = "=" * int((line_len + 4 - len(title))/2)
+    header = decoration + title + decoration
+    footer = "=" * len(header)
 
-    print(decoration + title + decoration)
+    print(header)
     print(output)
+    print(footer)
 
 def print_data(data_frame):
-    if LOG_LEVEL < Log.show_variable_report: return
-    print('\n===================REPORTE DE VARIABLES CUANTITATIVAS=================')
+    print('\n===================QUANTITATIVE VARIABLES REPORT=================')
     print(data_frame.describe().transpose())
-    print('\n===================REPORTE DE VARIABLES CUALITATIVAS=================')
+    print('\n===================QUALITATIVE VARIABLES REPORT=================')
     print(data_frame.describe(exclude = [np.number]).transpose())
-    print('\n=======================ESTRUCTURA=======================')
+    print('\n=======================DATA STRUCTURE=======================')
     print(data_frame.shape)
-    print('\n==========================TIPOS=========================')
+    print('\n==========================TYPES=========================')
     print(data_frame.dtypes)
 
 
 def print_population(population, gen_number):
-    if LOG_LEVEL < Log.show_highest_fitness: 
-        print("Processing generarion ", str(gen_number).zfill(2), "...")
-        return
     header_title = "Generation #" + str(gen_number) + "| Fittest chromosome fitness: " + str(population.get_best_chromosome().get_fitness())
     header_frame = "\n" + "*" * len(str(header_title))
-
-    if LOG_LEVEL < Log.show_chromosome_fitness: 
-        print(header_frame, "\n")
-        print(header_title)
-        print(header_frame)
-        return
-
 
     max_length = population.get_max_chromosome_length()
     output = ""
