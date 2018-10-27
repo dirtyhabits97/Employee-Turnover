@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
 
-from helper_methods.print_methods import print_data, print_variables
+from helper_methods.print_methods import print_variables
 from .data_encoding import one_hot_encode, binary_encode
 from .feature_selection import recursive_feature_elimination, principal_components_analysis, scale_data_frame
 
@@ -70,9 +70,6 @@ class DataManager:
 # ******************************************************************************
 # Print Data Methods
 # ******************************************************************************
-
-    def print_data(self):
-        print_data(self.data_frame)
 
     def print_variables(self):
         print_variables(self.get_X_train())

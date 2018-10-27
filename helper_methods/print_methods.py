@@ -15,19 +15,8 @@ def print_variables(data_frame):
     footer = "=" * len(header)
 
     print(header)
-    print(output)
+    print("\n" + output)
     print(footer)
-
-def print_data(data_frame):
-    print('\n===================QUANTITATIVE VARIABLES REPORT=================')
-    print(data_frame.describe().transpose())
-    print('\n===================QUALITATIVE VARIABLES REPORT=================')
-    print(data_frame.describe(exclude = [np.number]).transpose())
-    print('\n=======================DATA STRUCTURE=======================')
-    print(data_frame.shape)
-    print('\n==========================TYPES=========================')
-    print(data_frame.dtypes)
-
 
 def print_population(population, gen_number):
     header_title = "Generation #" + str(gen_number) + "| Fittest chromosome fitness: " + str(population.get_best_chromosome().get_fitness())
